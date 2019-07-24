@@ -21,7 +21,6 @@ class CreatePost extends React.Component {
     handleSubmit = e => {
         e.preventDefault() 
         // make payload to send to createPost action 
-        console.log(this.state)
         this.props.createPost(this.state)
         this.props.fetchPosts()
         this.props.history.push('/')
