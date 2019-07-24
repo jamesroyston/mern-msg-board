@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../logo.png'
+import { Link } from 'react-router-dom'
 import './Home.css'
 import { connect } from 'react-redux'
 import { fetchPosts } from '../store/actions/postActions'
