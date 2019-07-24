@@ -1,0 +1,14 @@
+img.post-image {
+    width: 160px;
+    position: absolute;
+    left: -60px;
+    top: 5px;
+    opacity: 0.6;
+    transform: rotate(45deg);
+
+}
+
+.home {
+    padding-left: 100px;
+    overflow: hidden;
+}
