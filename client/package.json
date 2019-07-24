@@ -11,7 +11,9 @@
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "react-router-dom": "^5.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.14.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,10 +35,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.14.2"
   },
   "proxy": "http://localhost:4000"
 }
