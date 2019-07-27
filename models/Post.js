@@ -1,8 +1,5 @@
 const mongoose = require('mongoose')
 
-// our first model
-// a schema describes the look of our data
-
 const PostSchema = mongoose.Schema({
     title: {
         type: String,
@@ -18,4 +15,4 @@ const PostSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Posts', PostSchema);
+module.exports = mongoose.model('Post', PostSchema);

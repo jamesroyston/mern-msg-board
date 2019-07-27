@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post')
 
-// now we can use router to create routes
 
 // GET ALL POSTS
 router.get('/', async (req, res) => {
@@ -14,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-//CREATE A POST
+// CREATE
 router.post('/', async (req, res) => {
     const post = new Post({
         title: req.body.title,
@@ -28,7 +27,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-//GET SPECIFIC POST
+// GET SPECIFIC
 router.get('/:postId', async(req, res) => {
     // mongoose method for Schemas
     try {
@@ -39,7 +38,7 @@ router.get('/:postId', async(req, res) => {
     }
 })
 
-//DELETE POST
+// DELETE
 router.delete('/:postId', async (req, res) => {
     try {
         const removedPost = await Post.deleteOne({
@@ -51,7 +50,7 @@ router.delete('/:postId', async (req, res) => {
     }
 })
 
-//UPDATE POST
+// UPDATE
 router.patch('/:postId', async (req, res) => {
     try {
         const updatedPost = await Post.updateOne( 

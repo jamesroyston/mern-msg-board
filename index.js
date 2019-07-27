@@ -33,7 +33,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
 
-let port = process.env.PORT || 4000
+let port = process.env.PORT || 4001
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`)

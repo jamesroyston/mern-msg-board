@@ -3,7 +3,7 @@ import axios from 'axios';
 export const deletePost = (id) => {
 	return (dispatch) => {
 		dispatch({type: 'DELETE_POST_START', id});
-		return axios.delete('/api/posts' + id)
+		return axios.delete('/api/posts/' + id)
 			.then(() => {
 				dispatch({type: 'DELETE_POST_SUCCESS'});
 			})
@@ -24,7 +24,6 @@ export const fetchPosts = () => {
 			})
 			.catch(err => {
 				dispatch({type: 'FETCH_POSTS_FAILURE', payload: err });
-				// make async call to database
 			});
 	};
 };
