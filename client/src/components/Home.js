@@ -3,7 +3,7 @@ import logo from '../logo.png';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../store/actions/postActions';
+import { fetchPosts } from '../store/actions/actions';
 
 class Home extends React.Component {
 

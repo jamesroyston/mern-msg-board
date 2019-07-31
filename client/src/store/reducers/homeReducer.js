@@ -1,7 +1,8 @@
 const initState = {
 	posts: [],
 	fetching: false,
-	error: null
+	error: null,
+	loggedIn: false,
 };
 
 const homeReducer = (state = initState, action) => {

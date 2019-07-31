@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deletePost, fetchPosts } from '../store/actions/postActions';
+import { deletePost, fetchPosts } from '../store/actions/actions';
 
 class Post extends React.Component {
 

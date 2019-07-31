@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createPost, fetchPosts } from '../store/actions/postActions'
+import { createPost, fetchPosts } from '../store/actions/actions'
 
 
 class CreatePost extends React.Component {
@@ -23,7 +23,7 @@ class CreatePost extends React.Component {
         // make payload to send to createPost action 
         this.props.createPost(this.state)
         this.props.fetchPosts()
-        this.props.history.push('/')
+        this.props.history.push('/home')
     }
 
     render() {
