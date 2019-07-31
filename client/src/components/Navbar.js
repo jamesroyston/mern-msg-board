@@ -19,7 +19,7 @@ class Navbar extends React.Component {
 						<span> | </span>
 						<NavLink to="/register">Register</NavLink>
 						<span> | </span>
-						<NavLink to="/secret">secret</NavLink>
+						<NavLink to="/secret">Secret</NavLink>
 					</span>
 				</div>
 			</nav>

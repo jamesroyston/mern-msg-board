@@ -20,7 +20,7 @@ class App extends React.Component {
 					<Switch>
 						<Route path='/home' component={withAuth(Home)}/>
 						<Route path="/login" component={Login} />
-						<Route exact path="/" component={Login} />
+						<Route exact path="/" component={withAuth(Home)} />
 						<Route path="/secret" component={withAuth(Secret)}/>
 						<Route path="/register" component={Register}/>
 						<Route path='/new_post' component={withAuth(CreatePost)} />

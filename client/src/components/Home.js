@@ -34,8 +34,11 @@ class Home extends React.Component {
 		);
 
 		return (
-			<div className="container">
-				{postList}
+			<div className="row container">
+				<div className="col s3"></div>
+				<div className="col s9">
+					{postList}
+				</div>
 			</div>
 		);
 	}
