@@ -25,65 +25,58 @@ const User = require('./models/User')
 app.use(cors())
 app.use('/api/posts', postsRoute)
 
-
-app.get('/api/home', (req, res) => {
-  res.send('welcome')
-})
-
-app.get('/api/secret', withAuth, (req, res) => {
+app.get('/api/amAuth', withAuth, (req, res) => {
   res.send('the password is potato')
 })
 
 // REGISTER
-app.post('/api/register', (req, res) => {
-  const { email, password } = req.body
-  const user = new User({ email, password })
-  console.log(email, password)
-  user.save(err => {
-      if (err) {
-          res.status(500)
-              .json({error: "error registering new user, please try again."})
-      } else {
-          res.status(200).json("registration successful!")
-      }
-  })
+app.post('/api/signup', async (req, res) => {
+  const { email, firstName, lastName, username, password } = req.body
+  const user = new User({ email, firstName, lastName, username, password })
+  try {
+    await user.save()
+    res.status(200).json('registration successful')
+  } catch (err) {
+    res.status(500).json({ error: "error registering new user, please try again." })
+  }
+
 })
 
 // LOGIN
 app.post('/api/authenticate', function (req, res) {
   const { email, password } = req.body
-  User.findOne({ email }, function(err, user) {
+  User.findOne({ email }, function (err, user) {
     if (err) {
       console.error(err)
       res.status(500)
-         .json({
-           error: 'internal error please try again'
-         })
+        .json({
+          error: 'internal error please try again'
+        })
     } else if (!user) {
       res.status(401)
-         .json({
-           error: 'incorrect email or password'
-         })
+        .json({
+          error: 'incorrect email or password'
+        })
     } else {
-      user.isCorrectPassword(password, function(err, same) {
+      user.isCorrectPassword(password, function (err, same) {
         if (err) {
           res.status(500)
-             .json({
-               error: 'internal error please try again'
-             })
+            .json({
+              error: 'internal error please try again'
+            })
         } else if (!same) {
           res.status(401)
-             .json({
-               error: 'incorrect email or password'
-             })
+            .json({
+              error: 'incorrect email or password'
+            })
         } else {
           // token time woo
-          const payload = {email}
+          const payload = { email }
           const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: '1h'
           })
           res.cookie('token', token, { httpOnly: true })
-             .sendStatus(200)
+            .sendStatus(200)
         }
       })
     }
@@ -91,20 +84,20 @@ app.post('/api/authenticate', function (req, res) {
 })
 
 // GET CURRENT USER
-app.get('/api/settings', withAuth, function(req, res) {
+app.get('/api/settings', withAuth, function (req, res) {
   return 'hi'
 })
 
 // CHECK TOKEN
-app.get('/api/checkToken', withAuth, function(req, res) {
+app.get('/api/checkToken', withAuth, function (req, res) {
   res.sendStatus(200)
 })
 
 // connect to db via mongoose
 mongoose.connect(
-    process.env.DB_CONNECTION, 
-    { useNewUrlParser: true }, 
-    () => { console.log('connected to db') }
+  process.env.DB_CONNECTION,
+  { useNewUrlParser: true },
+  () => { console.log('connected to db') }
 )
 
 // Serve static files from the React frontend app
@@ -118,5 +111,5 @@ app.get('*', (req, res) => {
 let port = process.env.PORT || 4001
 
 app.listen(port, () => {
-    console.log(`listening on port ${port}`)
+  console.log(`listening on port ${port}`)
 });

@@ -1,20 +1,21 @@
 const initState = {
+	loading: false,
 	loggedIn: false,
 	registered: false,
-	username: ''
+	email: ''
 };
 
 const userReducer = (state = initState, action) => {
 	switch (action.type) {
 	case 'LOGIN_START': {
-		return {
-			...state
-		};
+		return Object.assign({}, state, {
+			loading: true,
+		});
 	}
 	case 'LOGIN_SUCCESS': {
 		return Object.assign({}, state, {
-			loggedIn: true,
-			username: action.username
+			loading: false,
+			loggedIn: true
 		});
 	}
 	case 'LOGIN_FAILURE': {
@@ -24,14 +25,16 @@ const userReducer = (state = initState, action) => {
 	}
 
 	case 'REGISTER_START': {
-		return {
-			...state
-		};
+		return Object.assign({}, state, {
+			loading: true,
+		});
 	}
 	case 'REGISTER_SUCCESS': {
-		return {
-			registered: true
-		};
+		return Object.assign({}, state, {
+			loading: false,
+			registered: true,
+			email: action.email
+		});
 	}
 	case 'REGISTER_FAILURE': {
 		return {

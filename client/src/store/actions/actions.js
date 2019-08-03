@@ -57,7 +57,7 @@ export const loginPayload = (user) => {
 			.then(res => {
 				console.log(res);
 				if(res.status === 200) {
-					dispatch({type: 'LOGIN_SUCCESS', username: user.email});
+					dispatch({type: 'LOGIN_SUCCESS' });
 				} else {
 					dispatch({type: 'LOGIN_ERROR'});
 					const error = new Error(res.error);
@@ -65,7 +65,7 @@ export const loginPayload = (user) => {
 				}
 			})
 			.catch(err => {
-				dispatch({type: 'LOGIN_FAILURE', username: ''});
+				dispatch({type: 'LOGIN_FAILURE'});
 				console.error(err);
 				alert('error logging in please try again');
 			});
@@ -74,11 +74,14 @@ export const loginPayload = (user) => {
 
 export const registerPayload = (user) => {
 	return (dispatch) => {
-		dispatch({ type: 'REGISTER_START'});
+		dispatch({ type: 'REGISTER_START', email: user.email});
 		return axios({
 			method: 'post',
-			url:'/api/register', 
+			url:'/api/signup', 
 			data: {
+				username: user.username,
+				firstName: user.firstName,
+				lastName: user.lastName,
 				email: user.email,
 				password: user.password
 			},

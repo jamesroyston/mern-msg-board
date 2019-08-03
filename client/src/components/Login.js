@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loginPayload } from '../store/actions/actions'
+import Spinner from 'react-spinner-material'
 
 class Login extends Component {
 
@@ -18,13 +19,12 @@ class Login extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         this.props.loginPayload(this.state)
-        alert('Logged in!')
         setTimeout(() => this.props.history.push('/'), 1000)
     }
     render() {
         return (
-            <div className="columns is-desktop is-tablet is-mobile is-centered is-vcentered" style={{ marginTop: 15 + "%" }}>
-                <div className="column is-half ">
+            <div className="columns is-centered" style={{ marginTop: 5 + "%" }}>
+                <div className="column is-two-thirds-tablet is-half-desktop">
 
                     <form onSubmit={this.onSubmit} className="box">
                         <h4 className="title is-4">Please Login</h4>
@@ -35,7 +35,7 @@ class Login extends Component {
                                     type="email"
                                     name="email"
                                     placeholder="Enter email"
-                                    value={this.state.email}
+                                    value={this.props.user.email !== '' ? this.props.user.email : this.state.email}
                                     onChange={this.handleInputChange}
                                     required
                                 />
@@ -68,6 +68,7 @@ class Login extends Component {
                                 <button
                                     className="button is-success" type="submit" value="Submit">
                                     Login
+                                    <Spinner size={16} spinnerColor={"#333"} spinnerWidth={2} visible={this.props.user.loading}/>
                         </button>
                             </div>
                         </div>

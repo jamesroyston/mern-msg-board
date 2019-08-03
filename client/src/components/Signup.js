@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { registerPayload, loginPayload } from '../store/actions/actions'
+import Spinner from 'react-spinner-material'
 
 class Register extends Component {
 
     state = {
+        username: '',
         email: '',
         password: ''
     }
@@ -17,63 +19,126 @@ class Register extends Component {
     }
     onSubmit = (event) => {
         event.preventDefault();
-        alert('Registering user.....');
         this.props.registerPayload(this.state)
-        setTimeout(() => this.props.history.push('/'), 1000)
+        setTimeout(() => this.props.history.push('/login'), 1000)
     }
     render() {
+        console.log('signup props: ', this.props)
         return (
-            <div className="columns is-desktop is-centered is-tablet is-mobile is-vcentered" style={{marginTop: 15 + "%"}}>
-            <div className="column is-half ">
+            <div className="columns is-centered" style={{ marginTop: 5 + "%" }}>
+                <div className="column is-two-thirds-tablet is-half-desktop">
 
-                <form onSubmit={this.onSubmit} className="box">
-                    <h4 className="title is-4">Sign Up For OdinBook</h4>
-                    <div className="field">
-                        <div className="control has-icons-left">
-                            <input
-                                className="input"
-                                type="email"
-                                name="email"
-                                placeholder="Enter email"
-                                value={this.state.email}
-                                onChange={this.handleInputChange}
-                                required
-                            />
-                            <span className="icon is-small is-left">
-                                <i className="fas fa-envelope"></i>
-                            </span>
+                    <form onSubmit={this.onSubmit} className="box">
+                        <h4 className="title is-4">Sign Up For OdinBook</h4>
+
+                        <div className="columns">
+
+                            <div className="field column">
+                                <div className="control has-icons-left">
+                                    <input
+                                        className="input"
+                                        type="username"
+                                        name="username"
+                                        placeholder="Enter username"
+                                        value={this.state.username}
+                                        onChange={this.handleInputChange}
+                                        required
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="field">
-                        <div className="control has-icons-left">
+                        <div className="columns" style={{marginBottom: 0}}>
+                            <div className="field column is-half">
+                                <div className="control has-icons-left">
+                                    <input
+                                        className="input"
+                                        type="firstName"
+                                        name="firstName"
+                                        placeholder="First Name"
+                                        value={this.state.firstName}
+                                        onChange={this.handleInputChange}
+                                        required
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
 
-                            <input
-                                className="input"
-                                type="password"
-                                name="password"
-                                placeholder="Enter password"
-                                value={this.state.password}
-                                onChange={this.handleInputChange}
-                                required
-                            />
-                            <span className="icon is-small is-left">
-                                <i className="fas fa-lock"></i>
-                            </span>
+                            <div className="field column is-half">
+                                <div className="control has-icons-left">
+                                    <input
+                                        className="input"
+                                        type="lastName"
+                                        name="lastName"
+                                        placeholder="Last Name"
+                                        value={this.state.lastName}
+                                        onChange={this.handleInputChange}
+                                        required
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="field">
-                        <div className="control">
-                            <button
-                                className="button is-success" type="submit" value="Submit">
-                                Sign Up
+                        <div className="columns">
+                            <div className="field column">
+                                <div className="control has-icons-left">
+                                    <input
+                                        className="input"
+                                        type="email"
+                                        name="email"
+                                        placeholder="Enter email"
+                                        value={this.state.email}
+                                        onChange={this.handleInputChange}
+                                        required
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="columns">
+                            <div className="field column">
+                                <div className="control has-icons-left">
+
+                                    <input
+                                        className="input"
+                                        type="password"
+                                        name="password"
+                                        placeholder="Enter password"
+                                        value={this.state.password}
+                                        onChange={this.handleInputChange}
+                                        required
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <i className="fas fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="field">
+                            <div className="control">
+                                <button
+                                    className="button is-success" type="submit" value="Submit">
+                                    Sign Up
+                                    <Spinner size={16} spinnerColor={"#333"} spinnerWidth={2} visible={this.props.user.loading}/>
                     </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                    
+                </div>
             </div>
-        </div>
         )
     }
 }
