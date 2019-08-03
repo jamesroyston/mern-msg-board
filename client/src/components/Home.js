@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../logo.png';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import { connect } from 'react-redux';
@@ -12,11 +11,11 @@ class Home extends React.Component {
 	}
 
 	render() {
+		console.log(this.props);
 		const { posts } = this.props;
 		const postList = posts.length ? (
 			posts.reverse().map(post => {
 				return <div className="post card home" key={post._id}>
-					<img className="post-image" src={logo} alt="react logo"/>
 					<div className="card-content">
 						<Link to={'/' + post._id}>
 							<span className="card-title">
@@ -28,15 +27,14 @@ class Home extends React.Component {
 				</div>;
 			})
 		) : (
-			<div className="center">
+			<h4 className="title is-4">
                 No posts yet
-			</div>
+			</h4>
 		);
 
 		return (
-			<div className="row container">
-				<div className="col s3"></div>
-				<div className="col s9">
+			<div className="container">
+				<div className="">
 					{postList}
 				</div>
 			</div>
@@ -47,6 +45,7 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		posts: state.home.posts,
+		user: state.user
 	};
 };
 

@@ -19,7 +19,7 @@ class CreatePost extends React.Component {
     }
 
     handleSubmit = e => {
-        e.preventDefault() 
+        e.preventDefault()
         // make payload to send to createPost action 
         this.props.createPost(this.state)
         this.props.fetchPosts()
@@ -29,15 +29,31 @@ class CreatePost extends React.Component {
     render() {
         return (
             <div className="container">
-                <h5>New Post</h5>
-                <form onSubmit={this.handleSubmit} className=''>
-                    <label htmlFor="title">Topic:</label>
-                    <input autoComplete="off" name="title" className="input" type="text" value={this.state.value} onChange={this.handleChange}/>
+            <div className="columns">
+                <form onSubmit={this.handleSubmit} className="column is-half">
+                <h4 className="title is-4">New Post</h4>
 
+                <div className="field">
+                    <label htmlFor="title">Topic:</label>
+                    <div className="control">
+                    <input autoComplete="off" name="title" className="input is-primary" type="text" value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    </div>
+
+<div className="field">
                     <label htmlFor="body">Body:</label>
-                    <input autoComplete="off" name="description" className="materialize-textarea" type="text" value={this.state.value} onChange={this.handleChange}/>
-                    <button className="btn" type="submit">Submit</button>
+    <div className="control">
+
+                    <input autoComplete="off" name="description" className="textarea is-primary" type="text" value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    </div>
+                    <div className="field">
+                        <div className="control">
+                    <button className="button is-success" type="submit">Submit</button>
+    </div>
+</div>
                 </form>
+            </div>
             </div>
         )
     }

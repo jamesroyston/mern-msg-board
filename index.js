@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const cors = require('cors')
 const path = require('path')
 const jwt = require('jsonwebtoken')
+const helmet = require('helmet')
 const cookieParser = require('cookie-parser')
 const withAuth = require('./middleware')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
+app.use(helmet())
 // express native solution for bodyParser.json() pkg
 
 require('dotenv/config')
@@ -47,7 +49,7 @@ app.post('/api/register', (req, res) => {
   })
 })
 
-// AUTH / LOGIN
+// LOGIN
 app.post('/api/authenticate', function (req, res) {
   const { email, password } = req.body
   User.findOne({ email }, function(err, user) {
@@ -86,6 +88,11 @@ app.post('/api/authenticate', function (req, res) {
       })
     }
   })
+})
+
+// GET CURRENT USER
+app.get('/api/settings', withAuth, function(req, res) {
+  return 'hi'
 })
 
 // CHECK TOKEN

@@ -18,6 +18,7 @@ export default function withAuth(TargetComponent) {
 			Axios.get('/api/checkToken')
 				.then(res => {
 					if (res.status === 200) {
+						console.log('checking status code: ', res.status);
 						this.setState({ loading: false });
 					} else {
 						const error = new Error(res.error);
@@ -25,7 +26,6 @@ export default function withAuth(TargetComponent) {
 					}
 				})
 				.catch(err => {
-					console.error(err);
 					this.setState({ loading: false, redirect: true});
 				});
 		}

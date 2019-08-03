@@ -44,7 +44,7 @@ export const createPost = (post) => {
 
 export const loginPayload = (user) => {
 	return (dispatch) => {
-		dispatch({ type: 'LOGIN_START'});
+		dispatch({ type: 'LOGIN_START' });
 		return axios({
 			method: 'post',
 			url:'/api/authenticate', 
@@ -57,7 +57,7 @@ export const loginPayload = (user) => {
 			.then(res => {
 				console.log(res);
 				if(res.status === 200) {
-					dispatch({type: 'LOGIN_SUCCESS'});
+					dispatch({type: 'LOGIN_SUCCESS', username: user.email});
 				} else {
 					dispatch({type: 'LOGIN_ERROR'});
 					const error = new Error(res.error);
@@ -65,7 +65,7 @@ export const loginPayload = (user) => {
 				}
 			})
 			.catch(err => {
-				dispatch({type: 'LOGIN_FAILURE'});
+				dispatch({type: 'LOGIN_FAILURE', username: ''});
 				console.error(err);
 				alert('error logging in please try again');
 			});

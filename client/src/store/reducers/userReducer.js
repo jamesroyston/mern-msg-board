@@ -1,16 +1,45 @@
 const initState = {
-	loggedIn: false, 
+	loggedIn: false,
+	registered: false,
+	username: ''
 };
 
 const userReducer = (state = initState, action) => {
-	switch(action.type) {
+	switch (action.type) {
 	case 'LOGIN_START': {
 		return {
-			loggedIn: true
+			...state
+		};
+	}
+	case 'LOGIN_SUCCESS': {
+		return Object.assign({}, state, {
+			loggedIn: true,
+			username: action.username
+		});
+	}
+	case 'LOGIN_FAILURE': {
+		return {
+			...state
 		};
 	}
 
-	default: 
+	case 'REGISTER_START': {
+		return {
+			...state
+		};
+	}
+	case 'REGISTER_SUCCESS': {
+		return {
+			registered: true
+		};
+	}
+	case 'REGISTER_FAILURE': {
+		return {
+			...state
+		};
+	}
+
+	default:
 		return state;
 	}
 };
