@@ -14,10 +14,10 @@ class Post extends React.Component {
 		console.log(this.props);
 		const post = this.props.post ? (
 			<div className="post">
-				<h4 className="">{this.props.post.title}</h4>
+				<h4 className="title is-4">{this.props.post.title}</h4>
 				<div>{this.props.post.description}</div>
 				<div className="">
-					<button className="btn" onClick={this.handleClick.bind(this)}>
+					<button className="button is-danger is-disabled" onClick={this.handleClick.bind(this)}>
                     Delete Post
 					</button>
 

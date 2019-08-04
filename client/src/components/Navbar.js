@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 class Navbar extends React.Component {
 
 	state = {
-		burgerMenuActive: false
+		burgerMenuActive: false,
+		userAvatarShowing: false
 	}
 
 	toggleMenu() {
@@ -14,7 +15,8 @@ class Navbar extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.user);
+
+		const welcomeInNavbar = this.props.user.loggedIn ? `Welcome, ${this.props.user.firstName} ${this.props.user.lastName}!` : `You are not logged in`
 		return (
 			<nav className="navbar is-primary">
 				<div className="navbar-brand">
@@ -22,8 +24,6 @@ class Navbar extends React.Component {
 						<span>
 							<i className="fab fa-github"> </i></span>OdinBook
 					</NavLink>
-
-
 
 					<a onClick={this.toggleMenu.bind(this)}
 						role="button" className={this.state.burgerMenuActive ? "is-active navbar-burger" : "navbar-burger"} aria-label="menu" aria-expanded="false" data-target="navbarCollapsable">
@@ -39,6 +39,10 @@ class Navbar extends React.Component {
 					<div className="navbar-start">
 						<NavLink onClick={this.toggleMenu.bind(this)} className="navbar-item" to="/home">Home</NavLink>
 						<NavLink onClick={this.toggleMenu.bind(this)} className="navbar-item" to="/new_post">New Post</NavLink>
+						<div className="navbar-item">
+							{welcomeInNavbar}
+
+						</div>
 					</div>
 
 					<div className="navbar-end">

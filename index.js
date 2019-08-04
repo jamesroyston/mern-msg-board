@@ -25,7 +25,7 @@ const User = require('./models/User')
 app.use(cors())
 app.use('/api/posts', postsRoute)
 
-app.get('/api/amAuth', withAuth, (req, res) => {
+app.get('/api/amAuth', (req, res) => {
   res.send('the password is potato')
 })
 
@@ -44,6 +44,7 @@ app.post('/api/signup', async (req, res) => {
 
 // LOGIN
 app.post('/api/authenticate', function (req, res) {
+  console.log(req.body)
   const { email, password } = req.body
   User.findOne({ email }, function (err, user) {
     if (err) {
@@ -84,8 +85,13 @@ app.post('/api/authenticate', function (req, res) {
 })
 
 // GET CURRENT USER
-app.get('/api/settings', withAuth, function (req, res) {
-  return 'hi'
+app.get('/api/user', withAuth,  async(req, res) => {
+  try {
+    const user = await User.find({"email": req.email}).select("username firstName lastName -_id")
+    res.status(200).json(user)
+  } catch(err) {
+    res.status(401).send('error retrieving user info, please refresh the page')
+  }
 })
 
 // CHECK TOKEN
