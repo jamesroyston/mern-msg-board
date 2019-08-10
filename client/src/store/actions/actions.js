@@ -1,5 +1,26 @@
 import axios from 'axios';
 
+export const isStillAuth = () => {
+	return (dispatch) => {
+		dispatch({ type: 'VALIDATE_TOKEN_START' });
+		return axios.get('/api/checkToken')
+			.then(res => {
+				console.log('res from api/checkToken', res);
+				if (res.status === 200) {
+					console.log('checking status code: ', res.status);
+					dispatch({ type: 'VALIDATE_TOKEN_SUCCESS'});
+				} 
+				if (res.status === 401) {
+					console.log('checking status code: ', res.status);
+				}
+			})
+			.catch(err => {
+				dispatch({ type: 'VALIDATE_TOKEN_FAILURE'});
+			});
+
+	};
+};
+
 export const deletePost = (id) => {
 	return (dispatch) => {
 		dispatch({ type: 'DELETE_POST_START', id });
@@ -57,16 +78,17 @@ export const loginPayload = (user) => {
 			headers: { 'Content-Type': 'application/json' }
 		})
 			.then(res => {
-				console.log(res);
+				console.log('response from /api/authenticate', res);
 				if (res.status === 200) {
 					dispatch({ type: 'LOGIN_SUCCESS' });
 					return axios
 						.get('/api/user')
 						.then(res => {
+							console.log('res from api/user/', res);
 							dispatch({ type: 'GET_USER_SUCCESS', userData: res.data });
 						})
 						.catch(err => {
-							dispatch({ type: 'GET_USER_FAILURE', error: err});
+							dispatch({ type: 'GET_USER_FAILURE', error: err });
 						});
 				} else {
 					dispatch({ type: 'LOGIN_ERROR' });
@@ -98,18 +120,21 @@ export const registerPayload = (user) => {
 			headers: { 'Content-Type': 'application/json' }
 		})
 			.then(res => {
-				if (res.status === 200) {
+				if (res.status === 200 && res.data.error !== 'duplicate email, maybe try resetting your password') {
 					dispatch({ type: 'REGISTER_SUCCESS' });
 				} else {
-					dispatch({ type: 'REGISTER_FAILURE' });
-					const error = new Error(res.error);
+					const error = new Error(res.data.error);
 					throw error;
 				}
 			})
 			.catch(err => {
-				dispatch({ type: 'REGISTER_FAILURE' });
-				console.error(err);
-				alert('error occured during registration. please try again.');
+				if (err.toString() === 'Error: duplicate email, maybe try resetting your password') {
+					dispatch({ type: 'REGISTER_FAILURE' });
+					alert('email is taken');
+				} else {
+					dispatch({ type: 'REGISTER_FAILURE' });
+					alert('error occured during registration. please try again.');
+				}
 			});
 	};
 };

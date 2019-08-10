@@ -1,41 +1,40 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Axios from 'axios';
+import { connect } from 'react-redux';
+import { isStillAuth } from '../store/actions/actions';
 
-// this hoc will wrap the components we want protected via protected routing
+// hoc for protecting routes via our checkToken backend route
 
 export default function withAuth(TargetComponent) {
-	return class extends Component {
-		constructor () {
-			super();
-			this.state = {
-				loading: true,
-				redirect: false
-			};
-		}
+
+	const mapStateToProps = state => {
+		return {
+			auth: state.auth
+		};
+	};
+
+	const mapDispatchToProps = dispatch => {
+		return {
+			isStillAuth: () => {
+				dispatch(isStillAuth());
+			}
+		};
+	};
+
+	class WrappedComponent extends Component {
         
 		componentDidMount() {
-			Axios.get('/api/checkToken')
-				.then(res => {
-					if (res.status === 200) {
-						console.log('checking status code: ', res.status);
-						this.setState({ loading: false });
-					} else {
-						const error = new Error(res.error);
-						throw error;
-					}
-				})
-				.catch(err => {
-					this.setState({ loading: false, redirect: true});
-				});
+			this.props.isStillAuth();
 		}
         
 		render() {
-			const { loading, redirect } = this.state;
+			const { loading, redirect } = this.props.auth;
+			console.log('redirect in props: ', this.props.auth.redirect);
 			if (loading) {
 				return null;
 			}
 			if (redirect) {
+				console.log('redirecting to login');
 				return <Redirect to="/login" />;
 			}
 			return (
@@ -44,5 +43,7 @@ export default function withAuth(TargetComponent) {
 				</React.Fragment>
 			);
 		}
-	};
+	}
+
+	return connect(mapStateToProps, mapDispatchToProps)(WrappedComponent);
 }

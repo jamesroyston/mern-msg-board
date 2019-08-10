@@ -1,6 +1,7 @@
 const initState = {
 	loading: false,
 	loggedIn: false,
+	registerSuccess: false,
 	firstName: '',
 	lastName: '',
 	username: ''
@@ -25,6 +26,8 @@ const userReducer = (state = initState, action) => {
 	case 'LOGIN_START': {
 		return Object.assign({}, state, {
 			loading: true,
+			loggedInError: false,
+			registerSuccess: false,
 		});
 	}
 	case 'LOGIN_SUCCESS': {
@@ -34,21 +37,24 @@ const userReducer = (state = initState, action) => {
 		});
 	}
 	case 'LOGIN_FAILURE': {
-		return {
-			...state
-		};
+		return Object.assign({}, state, {
+			loading: false,
+			loggedIn: false,
+			loggedInError: true
+		});
 	}
 
 	case 'REGISTER_START': {
 		return Object.assign({}, state, {
 			loading: true,
+			loggedIn: false,
+			registerSuccess: false,
 		});
 	}
 	case 'REGISTER_SUCCESS': {
 		return Object.assign({}, state, {
 			loading: false,
-			registered: true,
-			email: action.email
+			registerSuccess: true,
 		});
 	}
 	case 'REGISTER_FAILURE': {

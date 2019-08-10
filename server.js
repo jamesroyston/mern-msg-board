@@ -33,13 +33,21 @@ app.get('/api/amAuth', (req, res) => {
 app.post('/api/signup', async (req, res) => {
   const { email, firstName, lastName, username, password } = req.body
   const user = new User({ email, firstName, lastName, username, password })
+  // let checkDBForEmail = await User.find({ "email": email }, (err, obj) => {
+  //   return obj
+  // })
   try {
-    await user.save()
+    await user.save().catch(err => {
+      throw err;
+    })
     res.status(200).json('registration successful')
   } catch (err) {
-    res.status(500).json({ error: "error registering new user, please try again." })
+    if (err.toString() === 'Error: There was a duplicate key error') {
+      res.status(200).json({ error: "duplicate email, maybe try resetting your password" })
+    } else {
+      res.status(500).json({ error: "internal error" })
+    }
   }
-
 })
 
 // LOGIN
@@ -85,11 +93,11 @@ app.post('/api/authenticate', function (req, res) {
 })
 
 // GET CURRENT USER
-app.get('/api/user', withAuth,  async(req, res) => {
+app.get('/api/user', withAuth, async (req, res) => {
   try {
-    const user = await User.find({"email": req.email}).select("username firstName lastName -_id")
+    const user = await User.find({ "email": req.email }).select("username firstName lastName -_id")
     res.status(200).json(user)
-  } catch(err) {
+  } catch (err) {
     res.status(401).send('error retrieving user info, please refresh the page')
   }
 })

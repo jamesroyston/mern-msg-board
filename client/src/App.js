@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/Navbar';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -12,16 +12,19 @@ import './App.sass';
 class App extends React.Component {
 
 	render() {
-	
+
 		return (
 			<BrowserRouter>
 				<div className="App">
 					<Navbar />
 					<Switch>
+						<Route exact path="/" render={() => (
+							<Redirect to="/home" />
+						)} 
+						/>
 						<Route path="/login" component={Login} />
-						<Route path="/signup" component={Signup}/>
-						<Route exact path="/" component={withAuth(Home)} />
-						<Route path='/home' component={withAuth(Home)}/>
+						<Route path="/signup" component={Signup} />
+						<Route path='/home' component={withAuth(Home)} />
 						<Route path='/new_post' component={withAuth(CreatePost)} />
 						<Route path="/:post_id" component={withAuth(Post)} />
 					</Switch>
@@ -29,7 +32,7 @@ class App extends React.Component {
 			</BrowserRouter>
 		);
 	}
-		
+
 }
-		
+
 export default App;

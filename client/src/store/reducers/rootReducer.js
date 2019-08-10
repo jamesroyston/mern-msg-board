@@ -1,10 +1,10 @@
-import postReducer from './postReducer';
+import authReducer from './authReducer';
 import homeReducer from './homeReducer';
 import userReducer from './userReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-	post: postReducer,
+	auth: authReducer,
 	home: homeReducer,
 	user: userReducer,
 });

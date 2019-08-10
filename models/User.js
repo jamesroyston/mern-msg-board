@@ -47,6 +47,14 @@ UserSchema.pre('save', function(next) {
     }
   })
 
+  UserSchema.post('save', function(error, doc, next) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+      next(new Error('There was a duplicate key error'));
+    } else {
+      next(error);
+    }
+  });
+
 UserSchema.methods.isCorrectPassword = function(password, cb) {
     bcrypt.compare(password, this.password, function(err, same) {
         if (err) {
